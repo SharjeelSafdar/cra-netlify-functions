@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [data, setData] = useState<string>('No Data:(');
+
+  useEffect(() => {
+    const f = async () => {
+      const res: string = await (await fetch('/.netlify/functions/hello-world')).json();
+      setData(res);
+    };
+
+    f();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +29,7 @@ function App() {
         >
           Learn React
         </a>
+        <h2>{data}</h2>
       </header>
     </div>
   );
